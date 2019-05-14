@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Text layoutX="223.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Zeiterfassung">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <TextField fx:id="eintragVorname" layoutX="152.0" layoutY="100.0" prefHeight="31.0" prefWidth="117.0" promptText="Vorname" />
+      <TextField fx:id="eintragNachname" layoutX="152.0" layoutY="142.0" prefHeight="31.0" prefWidth="117.0" promptText="Nachname" />
+      <Text layoutX="14.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vorname:" />
+      <Text layoutX="14.0" layoutY="163.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nachname:" />
+      <Text layoutX="31.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mitarbeiter hinzufügen:">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Text>
+      <Text layoutX="376.0" layoutY="167.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+      <Text layoutX="365.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bezeichnung:" />
+      <TextField fx:id="eintragBezeichnung" layoutX="469.0" layoutY="100.0" prefHeight="31.0" prefWidth="117.0" promptText="Projektname" />
+      <Text layoutX="396.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Neues Projekt erstellen:">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Text>
+      <TableView fx:id="mitarbeiterview" layoutX="14.0" layoutY="186.0" prefHeight="200.0" prefWidth="255.0">
+        <columns>
+            <TableColumn fx:id="idcol" prefWidth="35.0" text="ID" />
+            <TableColumn fx:id="vorcol" prefWidth="109.0" text="Vorname" />
+            <TableColumn fx:id="nachcol" prefWidth="109.0" text="Nachname" />
+        </columns>
+      </TableView>
+   </children>
+</Pane>

@@ -6,8 +6,8 @@ public class Projekt {
 	private int id;
 	
 	public Projekt(int id, String name) {
-		super();
 		this.name = name;
+		this.id = id;
 	}
 
 	public int getId() {

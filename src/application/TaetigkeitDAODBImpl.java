@@ -4,13 +4,13 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MitarbeiterDAODBImpl implements MitarbeiterDAO {
+public class TaetigkeitDAODBImpl implements TaetigkeitDAO {
 	
-	public List<Mitarbeiter> getAllMitarbeiter(){
+	public List<Taetigkeit> getAllTaetigkeit(){
 		Connection myConn = null;
 		Statement myStmt = null;
 		ResultSet myRs = null;
-		ArrayList<Mitarbeiter> mitarbeiterliste = new ArrayList<>();
+		ArrayList<Taetigkeit> taetigkeitliste = new ArrayList<>();
 		try {
 			// 1. Get a connection to database
 			myConn = SQLSingleton.getInstance().getConnection();
@@ -19,12 +19,12 @@ public class MitarbeiterDAODBImpl implements MitarbeiterDAO {
 			myStmt = myConn.createStatement();
 			
 			// 3. Execute SQL query
-			myRs = myStmt.executeQuery("SELECT * from mitarbeiter");
+			myRs = myStmt.executeQuery("SELECT * from taetigkeit");
 			
 			// 4. Process the result set
 			while (myRs.next()) {
-				Mitarbeiter mitar = new Mitarbeiter(myRs.getInt("id"), myRs.getString("vorname"), myRs.getString("nachname"));
-				mitarbeiterliste.add(mitar);
+//				Taetigkeit taet = new Taetigkeit(myRs.getInt("id"), myRs.getString("mitarid"), myRs.getString("projid"));
+//				spielerliste.add(taet);
 			}
 		}
 		catch (Exception exc) {
@@ -55,14 +55,14 @@ public class MitarbeiterDAODBImpl implements MitarbeiterDAO {
 				}
 			}
 		}
-		return mitarbeiterliste;
+		return taetigkeitliste;
 	}
 	
-	public void deleteMitarbeiter(int id) {
+	public void deleteTaetigkeit(int id) {
 		Connection myConn = null;
 		ResultSet myRs = null;
 		PreparedStatement myStmt = null;
-		String statement = "DELETE from mitarbeiter WHERE id=?";
+		String statement = "DELETE from taetigkeit WHERE id=?";
 		
 		try {
 			// 1. Get a connection to database
@@ -101,11 +101,11 @@ public class MitarbeiterDAODBImpl implements MitarbeiterDAO {
 		}
 	}
 	
-	public void addMitarbeiter(String vorname, String nachname) {
+	public void addTaetigkeit(String mitarbeiter, String projekt) {
 		PreparedStatement myStmt = null;
 		Connection myConn = null;
 		ResultSet myRs = null;
-		String statement = "INSERT INTO mitarbeiter (vorname, nachname) VALUES (?,?)";
+		String statement = "INSERT INTO taetigkeit (mitarid, projid) VALUES (?, ?)";
 		
 		try {
 			// 1. Get a connection to database
@@ -113,8 +113,8 @@ public class MitarbeiterDAODBImpl implements MitarbeiterDAO {
 			
 			// 2. Create a statement
 			myStmt = myConn.prepareStatement(statement);
-			myStmt.setString(1, vorname);
-			myStmt.setString(2, nachname);
+			myStmt.setString(1, mitarbeiter);
+			myStmt.setString(2, projekt);
 			myStmt.execute();
 			
 		}
@@ -151,11 +151,11 @@ public class MitarbeiterDAODBImpl implements MitarbeiterDAO {
 		}
 	}
 
-	public void updateMitarbeiter(int id, String vorname, String nachname) {
+	public void updateTaetigkeit(int id, String mitarbeiter, String projekt) {
 		PreparedStatement myStmt = null;
 		Connection myConn = null;
 		ResultSet myRs = null;
-		String statement = "UPDATE `mitarbeiter` SET `vorname`=?,`nachname`=? WHERE id=?";
+		String statement = "UPDATE `taetigkeit` SET `mitarid`=?, `projid`=?  WHERE id=?";
 		
 		try {
 			// 1. Get a connection to database
@@ -163,8 +163,8 @@ public class MitarbeiterDAODBImpl implements MitarbeiterDAO {
 			
 			// 2. Create a statement
 			myStmt = myConn.prepareStatement(statement);
-			myStmt.setString(1, vorname);
-			myStmt.setString(2, nachname);
+			myStmt.setString(1, mitarbeiter);
+			myStmt.setString(2, projekt);
 			myStmt.setInt(3, id);
 			myStmt.execute();
 		}

@@ -10,7 +10,7 @@ public class ProjektDAODBImpl implements ProjektDAO {
 		Connection myConn = null;
 		Statement myStmt = null;
 		ResultSet myRs = null;
-		ArrayList<Projekt> spielerliste = new ArrayList<>();
+		ArrayList<Projekt> projektliste = new ArrayList<>();
 		try {
 			// 1. Get a connection to database
 			myConn = SQLSingleton.getInstance().getConnection();
@@ -24,7 +24,7 @@ public class ProjektDAODBImpl implements ProjektDAO {
 			// 4. Process the result set
 			while (myRs.next()) {
 				Projekt proj = new Projekt(myRs.getInt("id"), myRs.getString("name"));
-				spielerliste.add(proj);
+				projektliste.add(proj);
 			}
 		}
 		catch (Exception exc) {
@@ -55,7 +55,7 @@ public class ProjektDAODBImpl implements ProjektDAO {
 				}
 			}
 		}
-		return spielerliste;
+		return projektliste;
 	}
 	
 	public void deleteProjekt(int id) {

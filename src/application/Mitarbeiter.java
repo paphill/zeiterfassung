@@ -7,7 +7,6 @@ public class Mitarbeiter {
 	private String nachname;
 	
 	public Mitarbeiter(int id, String vorname, String nachname) {
-		super();
 		this.id = id;
 		this.vorname = vorname;
 		this.nachname = nachname;
