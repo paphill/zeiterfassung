@@ -2,12 +2,14 @@ package application;
 
 public class Projekt {
 
-	private String name;
 	private int id;
+	private String name;
+	private String auftraggeber;
 	
-	public Projekt(int id, String name) {
-		this.name = name;
+	public Projekt(int id, String name, String auftraggeber) {
 		this.id = id;
+		this.name = name;
+		this.auftraggeber = auftraggeber;
 	}
 
 	public int getId() {
@@ -24,5 +26,17 @@ public class Projekt {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getAuftraggeber() {
+		return auftraggeber;
+	}
+
+	public void setAuftraggeber(String auftraggeber) {
+		this.auftraggeber = auftraggeber;
+	}
+	
+	public String toString() {
+		return id + " - " + name;
 	}
 }

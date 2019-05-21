@@ -23,7 +23,7 @@ public class MitarbeiterDAODBImpl implements MitarbeiterDAO {
 			
 			// 4. Process the result set
 			while (myRs.next()) {
-				Mitarbeiter mitar = new Mitarbeiter(myRs.getInt("id"), myRs.getString("vorname"), myRs.getString("nachname"));
+				Mitarbeiter mitar = new Mitarbeiter(myRs.getInt("id"), myRs.getString("vorname"), myRs.getString("nachname"), myRs.getString("typ"));
 				mitarbeiterliste.add(mitar);
 			}
 		}
@@ -101,11 +101,11 @@ public class MitarbeiterDAODBImpl implements MitarbeiterDAO {
 		}
 	}
 	
-	public void addMitarbeiter(String vorname, String nachname) {
+	public void addMitarbeiter(String vorname, String nachname, String typ) {
 		PreparedStatement myStmt = null;
 		Connection myConn = null;
 		ResultSet myRs = null;
-		String statement = "INSERT INTO mitarbeiter (vorname, nachname) VALUES (?,?)";
+		String statement = "INSERT INTO mitarbeiter (vorname, nachname, typ) VALUES (?,?,?)";
 		
 		try {
 			// 1. Get a connection to database
@@ -115,6 +115,7 @@ public class MitarbeiterDAODBImpl implements MitarbeiterDAO {
 			myStmt = myConn.prepareStatement(statement);
 			myStmt.setString(1, vorname);
 			myStmt.setString(2, nachname);
+			myStmt.setString(3, typ);
 			myStmt.execute();
 			
 		}
@@ -151,11 +152,11 @@ public class MitarbeiterDAODBImpl implements MitarbeiterDAO {
 		}
 	}
 
-	public void updateMitarbeiter(int id, String vorname, String nachname) {
+	public void updateMitarbeiter(int id, String vorname, String nachname, String typ) {
 		PreparedStatement myStmt = null;
 		Connection myConn = null;
 		ResultSet myRs = null;
-		String statement = "UPDATE `mitarbeiter` SET `vorname`=?,`nachname`=? WHERE id=?";
+		String statement = "UPDATE `mitarbeiter` SET `vorname`=?,`nachname`=?, `typ`=? WHERE id=?";
 		
 		try {
 			// 1. Get a connection to database
@@ -165,7 +166,8 @@ public class MitarbeiterDAODBImpl implements MitarbeiterDAO {
 			myStmt = myConn.prepareStatement(statement);
 			myStmt.setString(1, vorname);
 			myStmt.setString(2, nachname);
-			myStmt.setInt(3, id);
+			myStmt.setString(3, typ);
+			myStmt.setInt(4, id);
 			myStmt.execute();
 		}
 		catch (Exception exc) {

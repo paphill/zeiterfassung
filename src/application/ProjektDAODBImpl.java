@@ -23,7 +23,7 @@ public class ProjektDAODBImpl implements ProjektDAO {
 			
 			// 4. Process the result set
 			while (myRs.next()) {
-				Projekt proj = new Projekt(myRs.getInt("id"), myRs.getString("name"));
+				Projekt proj = new Projekt(myRs.getInt("id"), myRs.getString("name"), myRs.getString("auftraggeber"));
 				projektliste.add(proj);
 			}
 		}
@@ -101,11 +101,11 @@ public class ProjektDAODBImpl implements ProjektDAO {
 		}
 	}
 	
-	public void addProjekt(String name) {
+	public void addProjekt(String name, String auftraggeber) {
 		PreparedStatement myStmt = null;
 		Connection myConn = null;
 		ResultSet myRs = null;
-		String statement = "INSERT INTO projekt (name) VALUES (?)";
+		String statement = "INSERT INTO projekt (name, auftraggeber) VALUES (?,?)";
 		
 		try {
 			// 1. Get a connection to database
@@ -114,6 +114,7 @@ public class ProjektDAODBImpl implements ProjektDAO {
 			// 2. Create a statement
 			myStmt = myConn.prepareStatement(statement);
 			myStmt.setString(1, name);
+			myStmt.setString(2, auftraggeber);
 			myStmt.execute();
 			
 		}
@@ -150,11 +151,11 @@ public class ProjektDAODBImpl implements ProjektDAO {
 		}
 	}
 
-	public void updateProjekt(int id, String name) {
+	public void updateProjekt(int id, String name, String auftraggeber) {
 		PreparedStatement myStmt = null;
 		Connection myConn = null;
 		ResultSet myRs = null;
-		String statement = "UPDATE `projekt` SET `name`=? WHERE id=?";
+		String statement = "UPDATE `projekt` SET `name`=?, `auftraggeber`=? WHERE id=?";
 		
 		try {
 			// 1. Get a connection to database
@@ -163,7 +164,8 @@ public class ProjektDAODBImpl implements ProjektDAO {
 			// 2. Create a statement
 			myStmt = myConn.prepareStatement(statement);
 			myStmt.setString(1, name);
-			myStmt.setInt(2, id);
+			myStmt.setString(2, auftraggeber);
+			myStmt.setInt(3, id);
 			myStmt.execute();
 		}
 		catch (Exception exc) {

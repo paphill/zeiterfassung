@@ -1,133 +1,156 @@
 package application;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
+import javafx.collections.*;
+import javafx.fxml.*;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceDialog;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.ResourceBundle;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.util.*;
+import java.io.*;
 import java.net.URL;
 
-public class SampleController implements Initializable{
+public class AuswertungController implements Initializable{
 
 	ProjektDAO project = new ProjektDAODBImpl();
 	MitarbeiterDAO mitarbeiter = new MitarbeiterDAODBImpl();
+	TaetigkeitDAO taetigkeit = new TaetigkeitDAODBImpl();
+	ObservableList<Taetigkeit> taetigkeitliste;
 	ObservableList<Mitarbeiter> mitarbeiterliste;
 	ObservableList<Projekt> projektliste;
+	private ObservableList<String> zwischenmitar;
+	private ObservableList<String> zwischenproj;
 
 	@FXML
-	private TextField eintragID;
+	private TextField eintragZeit;
 	@FXML
-	private TextField eintragVorname;
+	private TextField eintragBeschreibung;
 	@FXML
-	private TextField eintragNachname;
+	private TextField eintragTaetID;
 	@FXML
-	private TextField eintragBezeichnung;
+	private ChoiceBox<String> choiceMitar;
 	@FXML
-	private Button buttonLeeren;
+	private ChoiceBox<String> choiceProj;
 	@FXML
-	private Button buttonLoeschen;
+	private TableColumn taetidcol;
 	@FXML
-	private Button buttonSpeichern;
+	private TableColumn taetmitarcol;
+	@FXML
+	private TableColumn taetprojcol;
+	@FXML
+	private TableColumn zeitcol;
+	@FXML
+	private TableColumn beschcol;
+	@FXML
+	private Button taetSpeichern;
+	@FXML
+	private Button taetLeeren;
+	@FXML
+	private Button taetLoeschen;
 	@FXML
 	private Button buttonExport;
 	@FXML
-	private Button buttonAbmelden;
-	@FXML
-	private TableView<Mitarbeiter> mitarbeiterview;
-	@FXML
-	private TableView<Projekt> projektview;
+	private TableView<Taetigkeit> taetview;
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public void initialize(URL url, ResourceBundle rb) {	
-    	TableColumn idcol = new TableColumn("ID");
-    	TableColumn vorcol = new TableColumn("Vorname");
-		TableColumn nachcol = new TableColumn("Nachname");
-		mitarbeiterview.getColumns().addAll(idcol, vorcol, nachcol);
+	public void initialize(URL url, ResourceBundle rb) {
+		mitarbeiterliste = FXCollections.observableArrayList(mitarbeiter.getAllMitarbeiter());
+		projektliste = FXCollections.observableArrayList(project.getAllProjekt());
+		zwischenmitar = FXCollections.observableArrayList();
+		zwischenproj = FXCollections.observableArrayList();
 		
-		idcol.setCellValueFactory(new PropertyValueFactory<Mitarbeiter, Integer>("id"));
-    	vorcol.setCellValueFactory(new PropertyValueFactory<Mitarbeiter, String>("vorname"));
-    	nachcol.setCellValueFactory(new PropertyValueFactory<Mitarbeiter, String>("nachname"));
-    	
-    	mitarbeiterliste = FXCollections.observableArrayList(mitarbeiter.getAllMitarbeiter());
-    	
-    	idcol.prefWidthProperty().bind(mitarbeiterview.widthProperty().multiply(0.2));
-    	vorcol.prefWidthProperty().bind(mitarbeiterview.widthProperty().multiply(0.4));
-    	nachcol.prefWidthProperty().bind(mitarbeiterview.widthProperty().multiply(0.4));
+		for(Mitarbeiter m : mitarbeiterliste) {
+			zwischenmitar.add(m.toString());
+		}
 		
-    	mitarbeiterview.setItems(mitarbeiterliste);
-    	}
-
+		for(Projekt p : projektliste) {
+			zwischenproj.add(p.toString());
+		}
+		
+		choiceMitar.setItems(zwischenmitar);
+		choiceProj.setItems(zwischenproj);;
+		
+		taetidcol.setCellValueFactory(new PropertyValueFactory<Taetigkeit, Integer>("id"));
+    	taetmitarcol.setCellValueFactory(new PropertyValueFactory<Taetigkeit, String>("mitar"));
+    	taetprojcol.setCellValueFactory(new PropertyValueFactory<Taetigkeit, String>("proj"));
+    	zeitcol.setCellValueFactory(new PropertyValueFactory<Taetigkeit, Integer>("zeit"));
+    	beschcol.setCellValueFactory(new PropertyValueFactory<Taetigkeit, String>("beschreibung"));
+    	
+    	taetigkeitliste = FXCollections.observableArrayList(taetigkeit.getAllTaetigkeit());
+    	
+    	taetidcol.prefWidthProperty().bind(taetview.widthProperty().multiply(0.09));
+    	taetmitarcol.prefWidthProperty().bind(taetview.widthProperty().multiply(0.2));
+    	taetprojcol.prefWidthProperty().bind(taetview.widthProperty().multiply(0.2));
+    	zeitcol.prefWidthProperty().bind(taetview.widthProperty().multiply(0.15));
+    	beschcol.prefWidthProperty().bind(taetview.widthProperty().multiply(0.35));
+		
+    	taetview.setItems(taetigkeitliste);
+	}
+	
 	@FXML
-    public void buttonSpeichernClicked() {
-		 String vorname = String.valueOf(eintragVorname.getText());
-		 String nachname = String.valueOf(eintragNachname.getText());
-		 if(eintragID.getLength() == 0) {
+    public void taetSpeichernClicked() {
+		 String mitar = String.valueOf(choiceMitar.getValue());
+		 String proj = String.valueOf(choiceProj.getValue());
+		 int zeit = Integer.valueOf(eintragZeit.getText());
+		 String beschreibung = String.valueOf(eintragBeschreibung.getText());
+		 if(eintragTaetID.getLength() == 0) {
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Information");
             alert.setHeaderText("Bestätigung");
-            String s ="Mitarbeiter wurde erfolgreich hinzugefügt";
+            String s ="Taetigkeit wurde erfolgreich hinzugefügt";
             alert.setContentText(s);
             alert.show();
-    		mitarbeiter.addMitarbeiter(vorname, nachname);
+    		taetigkeit.addTaetigkeit(mitar, proj, zeit, beschreibung);
         }else {
         	Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Information");
             alert.setHeaderText("Bestätigung");
-            String s ="Mitarbeiter wurde erfolgreich aktualisiert";
+            String s ="Taetigkeit wurde erfolgreich aktualisiert";
             alert.setContentText(s);
             alert.show();
-            int id = Integer.valueOf(eintragID.getText());
-        	mitarbeiter.updateMitarbeiter(id, vorname, nachname);
+            int id = Integer.valueOf(eintragTaetID.getText());
+        	taetigkeit.updateTaetigkeit(id, mitar, proj, zeit, beschreibung);
         }
-        mitarbeiterliste = FXCollections.observableArrayList(mitarbeiter.getAllMitarbeiter());
-    	mitarbeiterview.setItems(mitarbeiterliste);
+        taetigkeitliste = FXCollections.observableArrayList(taetigkeit.getAllTaetigkeit());
+    	taetview.setItems(taetigkeitliste);
 	}
 	
 	@FXML
-    public void buttonLeerenClicked() {
+    public void taetLeerenClicked() {
 		Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Information");
         alert.setHeaderText("Entleeren");
         String s ="Eingabefelder wurden geleert";
         alert.setContentText(s);
         alert.show();
-        eintragID.setText("");
-		eintragVorname.setText("");
-		eintragNachname.setText("");
+        eintragTaetID.setText("");
+		choiceMitar.getSelectionModel().clearSelection();
+		choiceMitar.setValue(null);
+		choiceProj.getSelectionModel().clearSelection();
+		choiceProj.setValue(null);
+		eintragZeit.setText("");
+		eintragBeschreibung.setText("");
 	}
 	
 	@FXML
-    public void buttonLoeschenClicked() {
+    public void taetLoeschenClicked() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Information");
 		String s = "Bitte Löschen bestätigen";
 		alert.setContentText(s);
 		Optional<ButtonType> result = alert.showAndWait();
 		if ((result.isPresent()) && (result.get() == ButtonType.OK)) {
-			Mitarbeiter selectedItem = mitarbeiterview.getSelectionModel().getSelectedItem();
-			mitarbeiter.deleteMitarbeiter(selectedItem.getId());
-		    mitarbeiterview.getItems().remove(selectedItem);
+			Taetigkeit selectedItem = taetview.getSelectionModel().getSelectedItem();
+			taetigkeit.deleteTaetigkeit(selectedItem.getId());
+		    taetview.getItems().remove(selectedItem);
 		}
+	}
+	
+	@FXML
+	public void ExportClicked() {
+		
 	}
 	
 //	@FXML
@@ -257,17 +280,21 @@ public class SampleController implements Initializable{
 //	}
 //	
 //	@FXML
-//	public void buttonExportClicked() {
+//	public void ExportClicked() {
 //		speichereAlsCSV("D:\\export.csv");
 //	}
 	
 	@FXML
-	public void mouseClicked(MouseEvent event) {
+	public void taetClicked(MouseEvent event) {
 		if (event.getClickCount() == 2) //Checking double click
 	    {
-			Mitarbeiter abk = mitarbeiterview.getSelectionModel().getSelectedItem();
-	        eintragVorname.setText(abk.getVorname());
-	        eintragNachname.setText(abk.getNachname());
+			Taetigkeit abk = taetview.getSelectionModel().getSelectedItem();
+			eintragTaetID.setText(""+abk.getId());
+			choiceMitar.setValue(abk.getMitar());
+			choiceProj.setValue(abk.getProj());
+			eintragZeit.setText(""+abk.getZeit());
+			eintragBeschreibung.setText(abk.getBeschreibung());
+	        
 	    }
 	}
 }

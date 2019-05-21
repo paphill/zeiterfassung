@@ -23,8 +23,8 @@ public class TaetigkeitDAODBImpl implements TaetigkeitDAO {
 			
 			// 4. Process the result set
 			while (myRs.next()) {
-//				Taetigkeit taet = new Taetigkeit(myRs.getInt("id"), myRs.getString("mitarid"), myRs.getString("projid"));
-//				spielerliste.add(taet);
+				Taetigkeit taet = new Taetigkeit(myRs.getInt("id"), myRs.getString("mitarid"), myRs.getString("projid"), myRs.getInt("arbeitszeit"), myRs.getString("beschreibung"));
+				taetigkeitliste.add(taet);
 			}
 		}
 		catch (Exception exc) {
@@ -101,11 +101,11 @@ public class TaetigkeitDAODBImpl implements TaetigkeitDAO {
 		}
 	}
 	
-	public void addTaetigkeit(String mitarbeiter, String projekt) {
+	public void addTaetigkeit(String mitarbeiter, String projekt, int zeit, String beschreibung) {
 		PreparedStatement myStmt = null;
 		Connection myConn = null;
 		ResultSet myRs = null;
-		String statement = "INSERT INTO taetigkeit (mitarid, projid) VALUES (?, ?)";
+		String statement = "INSERT INTO taetigkeit (mitarid, projid, arbeitszeit, beschreibung) VALUES (?,?,?,?)";
 		
 		try {
 			// 1. Get a connection to database
@@ -115,6 +115,8 @@ public class TaetigkeitDAODBImpl implements TaetigkeitDAO {
 			myStmt = myConn.prepareStatement(statement);
 			myStmt.setString(1, mitarbeiter);
 			myStmt.setString(2, projekt);
+			myStmt.setInt(3, zeit);
+			myStmt.setString(4, beschreibung);
 			myStmt.execute();
 			
 		}
@@ -151,11 +153,11 @@ public class TaetigkeitDAODBImpl implements TaetigkeitDAO {
 		}
 	}
 
-	public void updateTaetigkeit(int id, String mitarbeiter, String projekt) {
+	public void updateTaetigkeit(int id, String mitarbeiter, String projekt, int zeit, String beschreibung) {
 		PreparedStatement myStmt = null;
 		Connection myConn = null;
 		ResultSet myRs = null;
-		String statement = "UPDATE `taetigkeit` SET `mitarid`=?, `projid`=?  WHERE id=?";
+		String statement = "UPDATE `taetigkeit` SET `mitarid`=?, `projid`=?, `arbeitszeit`=?, `beschreibung`=? WHERE id=?";
 		
 		try {
 			// 1. Get a connection to database
@@ -165,7 +167,9 @@ public class TaetigkeitDAODBImpl implements TaetigkeitDAO {
 			myStmt = myConn.prepareStatement(statement);
 			myStmt.setString(1, mitarbeiter);
 			myStmt.setString(2, projekt);
-			myStmt.setInt(3, id);
+			myStmt.setInt(3, zeit);
+			myStmt.setString(4, beschreibung);
+			myStmt.setInt(5, id);
 			myStmt.execute();
 		}
 		catch (Exception exc) {

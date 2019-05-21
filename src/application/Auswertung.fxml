@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="489.0" prefWidth="675.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.AuswertungController">
+   <children>
+      <Text layoutX="263.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Zeiterfassung">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Text layoutX="56.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mitarbeiter:" />
+      <Text layoutX="69.0" layoutY="158.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Projekt:" />
+      <ChoiceBox fx:id="choiceMitar" layoutX="179.0" layoutY="78.0" prefHeight="31.0" prefWidth="123.0" />
+      <ChoiceBox fx:id="choiceProj" layoutX="179.0" layoutY="137.0" prefHeight="31.0" prefWidth="123.0" />
+      <Text layoutX="370.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Arbeitszeit:" />
+      <TextField fx:id="eintragZeit" layoutX="482.0" layoutY="78.0" prefHeight="31.0" prefWidth="89.0" promptText="Arbeitszeit" />
+      <Text layoutX="578.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
+      <TableView fx:id="taetview" layoutX="69.0" layoutY="253.0" onMouseClicked="#taetClicked" prefHeight="215.0" prefWidth="531.0">
+        <columns>
+          <TableColumn fx:id="taetidcol" prefWidth="35.0" text="ID" />
+          <TableColumn fx:id="taetmitarcol" prefWidth="104.0" text="Mitarbeiter" />
+            <TableColumn fx:id="taetprojcol" prefWidth="92.0" text="Projekt" />
+            <TableColumn fx:id="zeitcol" prefWidth="53.0" text="Zeit" />
+            <TableColumn fx:id="beschcol" prefWidth="246.0" text="Beschreibung" />
+        </columns>
+      </TableView>
+      <TextField fx:id="eintragBeschreibung" layoutX="481.0" layoutY="137.0" prefHeight="31.0" prefWidth="123.0" promptText="Beschreibung" />
+      <Text layoutX="361.0" layoutY="158.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Beschreibung:" />
+      <Button fx:id="taetSpeichern" layoutX="69.0" layoutY="203.0" mnemonicParsing="false" onAction="#taetSpeichernClicked" text="Save" />
+      <Button fx:id="taetLeeren" layoutX="187.0" layoutY="203.0" mnemonicParsing="false" onAction="#taetLeerenClicked" text="Clear" />
+      <Button fx:id="taetLoeschen" layoutX="306.0" layoutY="203.0" mnemonicParsing="false" onAction="#taetLoeschenClicked" text="Delete" />
+      <Button fx:id="buttonExport" layoutX="540.0" layoutY="203.0" mnemonicParsing="false" onAction="#ExportClicked" text="Export" />
+      <TextField fx:id="eintragTaetID" layoutX="526.0" layoutY="15.0" prefHeight="31.0" prefWidth="33.0" visible="false" />
+   </children>
+</Pane>
