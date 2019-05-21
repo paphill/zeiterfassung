@@ -11,7 +11,7 @@ import java.util.*;
 import java.io.*;
 import java.net.URL;
 
-public class AuswertungController implements Initializable{
+public class AuswertungController implements Initializable {
 
 	ProjektDAO project = new ProjektDAODBImpl();
 	MitarbeiterDAO mitarbeiter = new MitarbeiterDAODBImpl();
@@ -52,84 +52,85 @@ public class AuswertungController implements Initializable{
 	private Button buttonExport;
 	@FXML
 	private TableView<Taetigkeit> taetview;
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		choiceAktualisieren();
-		
+
 		taetidcol.setCellValueFactory(new PropertyValueFactory<Taetigkeit, Integer>("id"));
-    	taetmitarcol.setCellValueFactory(new PropertyValueFactory<Taetigkeit, String>("mitar"));
-    	taetprojcol.setCellValueFactory(new PropertyValueFactory<Taetigkeit, String>("proj"));
-    	zeitcol.setCellValueFactory(new PropertyValueFactory<Taetigkeit, Integer>("zeit"));
-    	beschcol.setCellValueFactory(new PropertyValueFactory<Taetigkeit, String>("beschreibung"));
-    	
-    	taetigkeitliste = FXCollections.observableArrayList(taetigkeit.getAllTaetigkeit());
-    	
-    	taetidcol.prefWidthProperty().bind(taetview.widthProperty().multiply(0.09));
-    	taetmitarcol.prefWidthProperty().bind(taetview.widthProperty().multiply(0.2));
-    	taetprojcol.prefWidthProperty().bind(taetview.widthProperty().multiply(0.2));
-    	zeitcol.prefWidthProperty().bind(taetview.widthProperty().multiply(0.15));
-    	beschcol.prefWidthProperty().bind(taetview.widthProperty().multiply(0.35));
-		
-    	taetview.setItems(taetigkeitliste);
+		taetmitarcol.setCellValueFactory(new PropertyValueFactory<Taetigkeit, String>("mitar"));
+		taetprojcol.setCellValueFactory(new PropertyValueFactory<Taetigkeit, String>("proj"));
+		zeitcol.setCellValueFactory(new PropertyValueFactory<Taetigkeit, Integer>("zeit"));
+		beschcol.setCellValueFactory(new PropertyValueFactory<Taetigkeit, String>("beschreibung"));
+
+		taetigkeitliste = FXCollections.observableArrayList(taetigkeit.getAllTaetigkeit());
+
+		taetidcol.prefWidthProperty().bind(taetview.widthProperty().multiply(0.09));
+		taetmitarcol.prefWidthProperty().bind(taetview.widthProperty().multiply(0.2));
+		taetprojcol.prefWidthProperty().bind(taetview.widthProperty().multiply(0.2));
+		zeitcol.prefWidthProperty().bind(taetview.widthProperty().multiply(0.15));
+		beschcol.prefWidthProperty().bind(taetview.widthProperty().multiply(0.35));
+
+		taetview.setItems(taetigkeitliste);
 	}
-	
+
 	@FXML
-    public void taetSpeichernClicked() {
-		 String mitar = String.valueOf(choiceMitar.getValue());
-		 String proj = String.valueOf(choiceProj.getValue());
-		 int zeit = Integer.valueOf(eintragZeit.getText());
-		 String beschreibung = String.valueOf(eintragBeschreibung.getText());
-		 if(eintragTaetID.getLength() == 0) {
-            Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle("Information");
-            alert.setHeaderText("Bestätigung");
-            String s ="Taetigkeit wurde erfolgreich hinzugefügt";
-            alert.setContentText(s);
-            alert.show();
-    		taetigkeit.addTaetigkeit(mitar, proj, zeit, beschreibung);
-        }else {
-        	Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle("Information");
-            alert.setHeaderText("Bestätigung");
-            String s ="Taetigkeit wurde erfolgreich aktualisiert";
-            alert.setContentText(s);
-            alert.show();
-            int id = Integer.valueOf(eintragTaetID.getText());
-        	taetigkeit.updateTaetigkeit(id, mitar, proj, zeit, beschreibung);
-        }
-        taetigkeitliste = FXCollections.observableArrayList(taetigkeit.getAllTaetigkeit());
-    	taetview.setItems(taetigkeitliste);
+	public void taetSpeichernClicked() {
+		String mitar = String.valueOf(choiceMitar.getValue());
+		String proj = String.valueOf(choiceProj.getValue());
+		int zeit = Integer.valueOf(eintragZeit.getText());
+		String beschreibung = String.valueOf(eintragBeschreibung.getText());
+		if (eintragTaetID.getLength() == 0) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Information");
+			alert.setHeaderText("Bestätigung");
+			String s = "Taetigkeit wurde erfolgreich hinzugefügt";
+			alert.setContentText(s);
+			alert.show();
+			taetigkeit.addTaetigkeit(mitar, proj, zeit, beschreibung);
+		} else {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Information");
+			alert.setHeaderText("Bestätigung");
+			String s = "Taetigkeit wurde erfolgreich aktualisiert";
+			alert.setContentText(s);
+			alert.show();
+			int id = Integer.valueOf(eintragTaetID.getText());
+			taetigkeit.updateTaetigkeit(id, mitar, proj, zeit, beschreibung);
+		}
+		taetigkeitliste = FXCollections.observableArrayList(taetigkeit.getAllTaetigkeit());
+		taetview.setItems(taetigkeitliste);
 	}
-	
+
 	public void choiceAktualisieren() {
 		mitarbeiterliste = FXCollections.observableArrayList(mitarbeiter.getAllMitarbeiter());
 		projektliste = FXCollections.observableArrayList(project.getAllProjekt());
 		zwischenmitar = FXCollections.observableArrayList();
 		zwischenproj = FXCollections.observableArrayList();
-		
-		for(Mitarbeiter m : mitarbeiterliste) {
+
+		for (Mitarbeiter m : mitarbeiterliste) {
 			zwischenmitar.add(m.toString());
 		}
-		
-		for(Projekt p : projektliste) {
+
+		for (Projekt p : projektliste) {
 			zwischenproj.add(p.toString());
 		}
-		
+
 		choiceMitar.setItems(zwischenmitar);
-		choiceProj.setItems(zwischenproj);;
+		choiceProj.setItems(zwischenproj);
+		;
 	}
-	
+
 	@FXML
-    public void taetLeerenClicked() {
+	public void taetLeerenClicked() {
 		Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Information");
-        alert.setHeaderText("Entleeren");
-        String s ="Eingabefelder wurden geleert";
-        alert.setContentText(s);
-        alert.show();
-        eintragTaetID.setText("");
+		alert.setTitle("Information");
+		alert.setHeaderText("Entleeren");
+		String s = "Eingabefelder wurden geleert";
+		alert.setContentText(s);
+		alert.show();
+		eintragTaetID.setText("");
 		choiceMitar.getSelectionModel().clearSelection();
 		choiceMitar.setValue(null);
 		choiceProj.getSelectionModel().clearSelection();
@@ -137,9 +138,9 @@ public class AuswertungController implements Initializable{
 		eintragZeit.setText("");
 		eintragBeschreibung.setText("");
 	}
-	
+
 	@FXML
-    public void taetLoeschenClicked() {
+	public void taetLoeschenClicked() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Information");
 		String s = "Bitte Löschen bestätigen";
@@ -148,15 +149,15 @@ public class AuswertungController implements Initializable{
 		if ((result.isPresent()) && (result.get() == ButtonType.OK)) {
 			Taetigkeit selectedItem = taetview.getSelectionModel().getSelectedItem();
 			taetigkeit.deleteTaetigkeit(selectedItem.getId());
-		    taetview.getItems().remove(selectedItem);
+			taetview.getItems().remove(selectedItem);
 		}
 	}
-	
+
 	@FXML
 	public void ExportClicked() {
-		
+
 	}
-	
+
 //	@FXML
 //	public void buttonAnmeldenClicked() {
 //		nichtangemeldeteplayers = FXCollections.observableArrayList();
@@ -243,69 +244,58 @@ public class AuswertungController implements Initializable{
 //		System.out.println("Alle noch nicht angemeldeten Spieler");
 //		System.out.println(nichtangemeldeteplayers);
 //	}
-	
-//	public void speichereAlsCSV(String pfad) {
-//
-//        FileWriter fileWriter = null;
-//        try {
-//            new File(pfad).createNewFile();
-//            fileWriter = new FileWriter(pfad);
-//            fileWriter.append("Alle Turniere");
-//            fileWriter.append("\n");
-//            for (Turnier t : turnierliste) {
-//                fileWriter.append(t.toCSV());
-//                fileWriter.append("\n");
-//                for(Spieler s : angemeldeteplayers) {
-//                	fileWriter.append(s.toCSVAngemeldet());
-//                    fileWriter.append("\n");
-//                }
-//            }
-//            
-//            fileWriter.append("\n");
-//            fileWriter.append("Alle Spieler");
-//            fileWriter.append("\n");
-//            for(Spieler s : spielerliste) {
-//            	fileWriter.append(s.toCSV());
-//            	fileWriter.append("\n");
-//            }
-//            System.out.println("Erfolgreich exportiert!");
-//
-//        } catch (IOException e) {
-//            System.out.println("Fehler beim Schreiben.");
-//            e.printStackTrace();
-//        } finally{
-//            try{
-//                fileWriter.flush();
-//                fileWriter.close();
-//            }catch(IOException e){
-//                e.printStackTrace();
-//            }
-//        }
-//	}
+
+	public void speichereAlsCSV(String pfad) {
+
+		FileWriter fileWriter = null;
+		try {
+			new File(pfad).createNewFile();
+			fileWriter = new FileWriter(pfad);
+			fileWriter.append("Alle Projekte");
+			fileWriter.append("\n");
+			for (Projekt t : projektliste) {
+				fileWriter.append(t.toCSV());
+				fileWriter.append("\n");
+			}
+			
+			System.out.println("Eexportiert!");
+
+		} catch (IOException e) {
+			System.out.println("Fehler beim Schreiben.");
+			e.printStackTrace();
+		} finally {
+			try {
+				fileWriter.flush();
+				fileWriter.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 //	
 //	@FXML
 //	public void ExportClicked() {
 //		speichereAlsCSV("D:\\export.csv");
 //	}
-	
+
 	@FXML
 	public void choiceClicked(MouseEvent even) {
 		zwischenmitar.clear();
 		zwischenproj.clear();
 		choiceAktualisieren();
 	}
-	
+
 	@FXML
 	public void taetClicked(MouseEvent event) {
-		if (event.getClickCount() == 2) //Checking double click
-	    {
+		if (event.getClickCount() == 2) // Checking double click
+		{
 			Taetigkeit abk = taetview.getSelectionModel().getSelectedItem();
-			eintragTaetID.setText(""+abk.getId());
+			eintragTaetID.setText("" + abk.getId());
 			choiceMitar.setValue(abk.getMitar());
 			choiceProj.setValue(abk.getProj());
-			eintragZeit.setText(""+abk.getZeit());
+			eintragZeit.setText("" + abk.getZeit());
 			eintragBeschreibung.setText(abk.getBeschreibung());
-	        
-	    }
+
+		}
 	}
 }

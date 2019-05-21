@@ -39,4 +39,9 @@ public class Projekt {
 	public String toString() {
 		return id + " - " + name;
 	}
+
+	public String toCSV() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
