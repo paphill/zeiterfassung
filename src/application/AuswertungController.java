@@ -56,21 +56,7 @@ public class AuswertungController implements Initializable{
 	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		mitarbeiterliste = FXCollections.observableArrayList(mitarbeiter.getAllMitarbeiter());
-		projektliste = FXCollections.observableArrayList(project.getAllProjekt());
-		zwischenmitar = FXCollections.observableArrayList();
-		zwischenproj = FXCollections.observableArrayList();
-		
-		for(Mitarbeiter m : mitarbeiterliste) {
-			zwischenmitar.add(m.toString());
-		}
-		
-		for(Projekt p : projektliste) {
-			zwischenproj.add(p.toString());
-		}
-		
-		choiceMitar.setItems(zwischenmitar);
-		choiceProj.setItems(zwischenproj);;
+		choiceAktualisieren();
 		
 		taetidcol.setCellValueFactory(new PropertyValueFactory<Taetigkeit, Integer>("id"));
     	taetmitarcol.setCellValueFactory(new PropertyValueFactory<Taetigkeit, String>("mitar"));
@@ -115,6 +101,24 @@ public class AuswertungController implements Initializable{
         }
         taetigkeitliste = FXCollections.observableArrayList(taetigkeit.getAllTaetigkeit());
     	taetview.setItems(taetigkeitliste);
+	}
+	
+	public void choiceAktualisieren() {
+		mitarbeiterliste = FXCollections.observableArrayList(mitarbeiter.getAllMitarbeiter());
+		projektliste = FXCollections.observableArrayList(project.getAllProjekt());
+		zwischenmitar = FXCollections.observableArrayList();
+		zwischenproj = FXCollections.observableArrayList();
+		
+		for(Mitarbeiter m : mitarbeiterliste) {
+			zwischenmitar.add(m.toString());
+		}
+		
+		for(Projekt p : projektliste) {
+			zwischenproj.add(p.toString());
+		}
+		
+		choiceMitar.setItems(zwischenmitar);
+		choiceProj.setItems(zwischenproj);;
 	}
 	
 	@FXML
@@ -283,6 +287,13 @@ public class AuswertungController implements Initializable{
 //	public void ExportClicked() {
 //		speichereAlsCSV("D:\\export.csv");
 //	}
+	
+	@FXML
+	public void choiceClicked(MouseEvent even) {
+		zwischenmitar.clear();
+		zwischenproj.clear();
+		choiceAktualisieren();
+	}
 	
 	@FXML
 	public void taetClicked(MouseEvent event) {

@@ -14,8 +14,8 @@
       </Text>
       <Text layoutX="56.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mitarbeiter:" />
       <Text layoutX="69.0" layoutY="158.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Projekt:" />
-      <ChoiceBox fx:id="choiceMitar" layoutX="179.0" layoutY="78.0" prefHeight="31.0" prefWidth="123.0" />
-      <ChoiceBox fx:id="choiceProj" layoutX="179.0" layoutY="137.0" prefHeight="31.0" prefWidth="123.0" />
+      <ChoiceBox fx:id="choiceMitar" layoutX="179.0" layoutY="78.0" onMouseClicked="#choiceClicked" prefHeight="31.0" prefWidth="123.0" />
+      <ChoiceBox fx:id="choiceProj" layoutX="179.0" layoutY="137.0" onMouseClicked="#choiceClicked" prefHeight="31.0" prefWidth="123.0" />
       <Text layoutX="370.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Arbeitszeit:" />
       <TextField fx:id="eintragZeit" layoutX="482.0" layoutY="78.0" prefHeight="31.0" prefWidth="89.0" promptText="Arbeitszeit" />
       <Text layoutX="578.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
