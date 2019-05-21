@@ -1,5 +1,7 @@
 package application;
 
+import java.sql.Date;
+
 public class Taetigkeit {
 
 	private int id;
@@ -7,9 +9,11 @@ public class Taetigkeit {
 	private String proj;
 	private int zeit;
 	private String beschreibung;
+	private Date beginn;
 	
-	public Taetigkeit(int id, String mitar, String proj, int zeit, String beschreibung) {
+	public Taetigkeit(int id, Date beginn,String mitar, String proj, int zeit, String beschreibung) {
 		this.id = id;
+		this.beginn = beginn;
 		this.mitar = mitar;
 		this.proj = proj;
 		this.zeit = zeit;
@@ -22,6 +26,14 @@ public class Taetigkeit {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public Date getBeginn() {
+		return beginn;
+	}
+
+	public void setBeginn(Date beginn) {
+		this.beginn = beginn;
 	}
 
 	public String getMitar() {
