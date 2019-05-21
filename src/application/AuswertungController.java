@@ -254,7 +254,7 @@ public class AuswertungController implements Initializable {
 			fileWriter.append("Alle Projekte");
 			fileWriter.append("\n");
 			for (Projekt t : projektliste) {
-				fileWriter.append(t.toCSV());
+				fileWriter.append(t.toString());
 				fileWriter.append("\n");
 			}
 			
