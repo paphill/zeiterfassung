@@ -101,11 +101,11 @@ public class TaetigkeitDAODBImpl implements TaetigkeitDAO {
 		}
 	}
 	
-	public void addTaetigkeit(String mitarbeiter, String projekt, int zeit, String beschreibung) {
+	public void addTaetigkeit(Date beginn, String mitarbeiter, String projekt, int zeit, String beschreibung) {
 		PreparedStatement myStmt = null;
 		Connection myConn = null;
 		ResultSet myRs = null;
-		String statement = "INSERT INTO taetigkeit (mitarid, projid, arbeitszeit, beschreibung) VALUES (?,?,?,?)";
+		String statement = "INSERT INTO taetigkeit (beginn, mitarid, projid, arbeitszeit, beschreibung) VALUES (?,?,?,?,?)";
 		
 		try {
 			// 1. Get a connection to database
@@ -114,9 +114,10 @@ public class TaetigkeitDAODBImpl implements TaetigkeitDAO {
 			// 2. Create a statement
 			myStmt = myConn.prepareStatement(statement);
 			myStmt.setString(1, mitarbeiter);
-			myStmt.setString(2, projekt);
-			myStmt.setInt(3, zeit);
-			myStmt.setString(4, beschreibung);
+			myStmt.setDate(2, beginn);
+			myStmt.setString(3, projekt);
+			myStmt.setInt(4, zeit);
+			myStmt.setString(5, beschreibung);
 			myStmt.execute();
 			
 		}
