@@ -39,9 +39,4 @@ public class Projekt {
 	public String toString() {
 		return id + " - " + name;
 	}
-
-	public String toCSV() {
-		toString();
-		return null;
-	}
 }
