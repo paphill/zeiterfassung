@@ -12,28 +12,31 @@
             <Font size="24.0" />
          </font>
       </Text>
-      <Text layoutX="56.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mitarbeiter:" />
-      <Text layoutX="69.0" layoutY="158.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Projekt:" />
-      <ChoiceBox fx:id="choiceMitar" layoutX="179.0" layoutY="78.0" onMouseClicked="#choiceClicked" prefHeight="31.0" prefWidth="123.0" />
-      <ChoiceBox fx:id="choiceProj" layoutX="179.0" layoutY="137.0" onMouseClicked="#choiceClicked" prefHeight="31.0" prefWidth="123.0" />
-      <Text layoutX="370.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Arbeitszeit:" />
-      <TextField fx:id="eintragZeit" layoutX="482.0" layoutY="78.0" prefHeight="31.0" prefWidth="89.0" promptText="Arbeitszeit" />
-      <Text layoutX="578.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
-      <TableView fx:id="taetview" layoutX="69.0" layoutY="253.0" onMouseClicked="#taetClicked" prefHeight="215.0" prefWidth="531.0">
+      <Text layoutX="54.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mitarbeiter:" />
+      <Text layoutX="68.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Projekt:" />
+      <ChoiceBox fx:id="choiceMitar" layoutX="152.0" layoutY="67.0" onMouseClicked="#choiceMitarClicked" prefHeight="31.0" prefWidth="123.0" />
+      <ChoiceBox fx:id="choiceProj" layoutX="152.0" layoutY="163.0" onMouseClicked="#choiceProjClicked" prefHeight="31.0" prefWidth="123.0" />
+      <Text layoutX="368.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Arbeitszeit:" />
+      <TextField fx:id="eintragZeit" layoutX="482.0" layoutY="68.0" prefHeight="31.0" prefWidth="89.0" promptText="Arbeitszeit" />
+      <Text layoutX="578.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h" />
+      <TableView fx:id="taetview" layoutX="25.0" layoutY="253.0" onMouseClicked="#taetClicked" prefHeight="215.0" prefWidth="616.0">
         <columns>
           <TableColumn fx:id="taetidcol" prefWidth="35.0" text="ID" />
           <TableColumn fx:id="taetmitarcol" prefWidth="104.0" text="Mitarbeiter" />
             <TableColumn fx:id="taetprojcol" prefWidth="92.0" text="Projekt" />
             <TableColumn fx:id="zeitcol" prefWidth="53.0" text="Zeit" />
             <TableColumn fx:id="beschcol" prefWidth="246.0" text="Beschreibung" />
+            <TableColumn fx:id="datecol" prefWidth="85.0" text="Datum" />
         </columns>
       </TableView>
-      <TextField fx:id="eintragBeschreibung" layoutX="481.0" layoutY="137.0" prefHeight="31.0" prefWidth="123.0" promptText="Beschreibung" />
-      <Text layoutX="361.0" layoutY="158.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Beschreibung:" />
-      <Button fx:id="taetSpeichern" layoutX="69.0" layoutY="203.0" mnemonicParsing="false" onAction="#taetSpeichernClicked" text="Save" />
-      <Button fx:id="taetLeeren" layoutX="187.0" layoutY="203.0" mnemonicParsing="false" onAction="#taetLeerenClicked" text="Clear" />
-      <Button fx:id="taetLoeschen" layoutX="306.0" layoutY="203.0" mnemonicParsing="false" onAction="#taetLoeschenClicked" text="Delete" />
-      <Button fx:id="buttonExport" layoutX="540.0" layoutY="203.0" mnemonicParsing="false" onAction="#ExportClicked" text="Export" />
+      <TextField fx:id="eintragBeschreibung" layoutX="479.0" layoutY="117.0" prefHeight="31.0" prefWidth="123.0" promptText="Beschreibung" />
+      <Text layoutX="356.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Beschreibung:" />
+      <Button fx:id="taetSpeichern" layoutX="68.0" layoutY="214.0" mnemonicParsing="false" onAction="#taetSpeichernClicked" text="Save" />
+      <Button fx:id="taetLeeren" layoutX="187.0" layoutY="214.0" mnemonicParsing="false" onAction="#taetLeerenClicked" text="Clear" />
+      <Button fx:id="taetLoeschen" layoutX="306.0" layoutY="214.0" mnemonicParsing="false" onAction="#taetLoeschenClicked" text="Delete" />
+      <Button fx:id="buttonExport" layoutX="540.0" layoutY="214.0" mnemonicParsing="false" onAction="#ExportClicked" text="Export" />
       <TextField fx:id="eintragTaetID" layoutX="526.0" layoutY="15.0" prefHeight="31.0" prefWidth="33.0" visible="false" />
+      <DatePicker fx:id="eintragDate" layoutX="481.0" layoutY="163.0" prefHeight="31.0" prefWidth="123.0" promptText="Datum" />
+      <Text layoutX="379.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Datum:" />
    </children>
 </Pane>

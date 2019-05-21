@@ -9,15 +9,16 @@ public class Taetigkeit {
 	private String proj;
 	private int zeit;
 	private String beschreibung;
-	private Date beginn;
+	private Date datum;
+	private String border = " -";
 	
-	public Taetigkeit(int id, Date beginn,String mitar, String proj, int zeit, String beschreibung) {
+	public Taetigkeit(int id, String mitar, String proj, int zeit, String beschreibung, Date datum) {
 		this.id = id;
-		this.beginn = beginn;
 		this.mitar = mitar;
 		this.proj = proj;
 		this.zeit = zeit;
 		this.beschreibung = beschreibung;
+		this.datum = datum;
 	}
 
 	public int getId() {
@@ -28,16 +29,15 @@ public class Taetigkeit {
 		this.id = id;
 	}
 
-	public Date getBeginn() {
-		return beginn;
-	}
-
-	public void setBeginn(Date beginn) {
-		this.beginn = beginn;
-	}
-
 	public String getMitar() {
 		return mitar;
+	}
+	
+	public String getMitarId() {
+		String[] splitMitar;
+		splitMitar = mitar.split(border);
+		String mitarID = splitMitar[0];
+		return mitarID;
 	}
 
 	public void setMitar(String mitar) {
@@ -66,5 +66,17 @@ public class Taetigkeit {
 
 	public void setBeschreibung(String beschreibung) {
 		this.beschreibung = beschreibung;
+	}
+	
+	public Date getDatum() {
+		return datum;
+	}
+
+	public void setDatum(Date datum) {
+		this.datum = datum;
+	}
+
+	public String toCSV() {
+		return "" + ";" +id + ";" + proj + ";" + zeit + ";" + beschreibung + ";" + datum;
 	}
 }

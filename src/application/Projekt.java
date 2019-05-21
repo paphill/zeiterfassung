@@ -5,7 +5,7 @@ public class Projekt {
 	private int id;
 	private String name;
 	private String auftraggeber;
-
+	
 	public Projekt(int id, String name, String auftraggeber) {
 		this.id = id;
 		this.name = name;
@@ -35,8 +35,12 @@ public class Projekt {
 	public void setAuftraggeber(String auftraggeber) {
 		this.auftraggeber = auftraggeber;
 	}
-
+	
 	public String toString() {
 		return id + " - " + name;
+	}
+	
+	public String toCSV() {
+		return id + ";" + name + ";" + auftraggeber;
 	}
 }

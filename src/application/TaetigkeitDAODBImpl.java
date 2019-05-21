@@ -23,7 +23,7 @@ public class TaetigkeitDAODBImpl implements TaetigkeitDAO {
 			
 			// 4. Process the result set
 			while (myRs.next()) {
-				Taetigkeit taet = new Taetigkeit(myRs.getInt("id"), myRs.getDate("beginn"), myRs.getString("mitarid"), myRs.getString("projid"), myRs.getInt("arbeitszeit"), myRs.getString("beschreibung"));
+				Taetigkeit taet = new Taetigkeit(myRs.getInt("id"), myRs.getString("mitarid"), myRs.getString("projid"), myRs.getInt("arbeitszeit"), myRs.getString("beschreibung"), myRs.getDate("datum"));
 				taetigkeitliste.add(taet);
 			}
 		}
@@ -101,11 +101,11 @@ public class TaetigkeitDAODBImpl implements TaetigkeitDAO {
 		}
 	}
 	
-	public void addTaetigkeit(Date beginn, String mitarbeiter, String projekt, int zeit, String beschreibung) {
+	public void addTaetigkeit(String mitarbeiter, String projekt, int zeit, String beschreibung, Date datum) {
 		PreparedStatement myStmt = null;
 		Connection myConn = null;
 		ResultSet myRs = null;
-		String statement = "INSERT INTO taetigkeit (beginn, mitarid, projid, arbeitszeit, beschreibung) VALUES (?,?,?,?,?)";
+		String statement = "INSERT INTO taetigkeit (mitarid, projid, arbeitszeit, beschreibung, datum) VALUES (?,?,?,?,?)";
 		
 		try {
 			// 1. Get a connection to database
@@ -114,10 +114,10 @@ public class TaetigkeitDAODBImpl implements TaetigkeitDAO {
 			// 2. Create a statement
 			myStmt = myConn.prepareStatement(statement);
 			myStmt.setString(1, mitarbeiter);
-			myStmt.setDate(2, beginn);
-			myStmt.setString(3, projekt);
-			myStmt.setInt(4, zeit);
-			myStmt.setString(5, beschreibung);
+			myStmt.setString(2, projekt);
+			myStmt.setInt(3, zeit);
+			myStmt.setString(4, beschreibung);
+			myStmt.setDate(5, datum);
 			myStmt.execute();
 			
 		}
@@ -154,11 +154,11 @@ public class TaetigkeitDAODBImpl implements TaetigkeitDAO {
 		}
 	}
 
-	public void updateTaetigkeit(int id, Date beginn, String mitarbeiter, String projekt, int zeit, String beschreibung) {
+	public void updateTaetigkeit(int id, String mitarbeiter, String projekt, int zeit, String beschreibung, Date datum) {
 		PreparedStatement myStmt = null;
 		Connection myConn = null;
 		ResultSet myRs = null;
-		String statement = "UPDATE `taetigkeit` SET beginn = ?, `mitarid`=?, `projid`=?, `arbeitszeit`=?, `beschreibung`=? WHERE id=?";
+		String statement = "UPDATE `taetigkeit` SET `mitarid`=?, `projid`=?, `arbeitszeit`=?, `beschreibung`=?, `datum`=? WHERE id=?";
 		
 		try {
 			// 1. Get a connection to database
@@ -167,10 +167,10 @@ public class TaetigkeitDAODBImpl implements TaetigkeitDAO {
 			// 2. Create a statement
 			myStmt = myConn.prepareStatement(statement);
 			myStmt.setString(1, mitarbeiter);
-			myStmt.setDate(2, beginn);
-			myStmt.setString(3, projekt);
-			myStmt.setInt(4, zeit);
-			myStmt.setString(5, beschreibung);
+			myStmt.setString(2, projekt);
+			myStmt.setInt(3, zeit);
+			myStmt.setString(4, beschreibung);
+			myStmt.setDate(5, datum);
 			myStmt.setInt(6, id);
 			myStmt.execute();
 		}

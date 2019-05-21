@@ -49,4 +49,8 @@ public class Mitarbeiter {
 	public String toString() {
 		return id + " - " + vorname + " " + nachname;
 	}
+	
+	public String toCSV() {
+		return id + ";" + vorname + ";" + nachname;
+	}
 }

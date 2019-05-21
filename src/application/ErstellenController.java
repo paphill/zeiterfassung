@@ -128,6 +128,7 @@ public class ErstellenController implements Initializable{
         }
         mitarbeiterliste = FXCollections.observableArrayList(mitarbeiter.getAllMitarbeiter());
     	mitarbeiterview.setItems(mitarbeiterliste);
+    	mitarLeerenSpeichern();
 	}
 	
 	@FXML
@@ -160,6 +161,22 @@ public class ErstellenController implements Initializable{
 	}
 	
 	@FXML
+	public void mitarLeerenSpeichern() {
+		eintragID.setText("");
+		eintragVorname.setText("");
+		eintragNachname.setText("");
+		choiceTyp.getSelectionModel().clearSelection();
+		choiceTyp.setValue(null);
+	}
+	
+	@FXML
+	public void projLeerenSpeichern() {
+		eintragProID.setText("");
+		eintragBezeichnung.setText("");
+		eintragAuftraggeber.setText("");
+	}
+	
+	@FXML
 	public void projSpeichernClicked() {
 		String bezeichnung = String.valueOf(eintragBezeichnung.getText());
 		String auftrag = String.valueOf(eintragAuftraggeber.getText());
@@ -183,6 +200,7 @@ public class ErstellenController implements Initializable{
        }
        projektliste = FXCollections.observableArrayList(project.getAllProjekt());
    	projektview.setItems(projektliste);
+   	projLeerenSpeichern();
 	}
 	
 	@FXML
