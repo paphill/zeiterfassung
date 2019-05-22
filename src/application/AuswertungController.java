@@ -4,9 +4,12 @@ import javafx.collections.*;
 import javafx.fxml.*;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import java.sql.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.io.*;
 import java.net.URL;
@@ -192,12 +195,40 @@ public class AuswertungController implements Initializable{
 		}
 	}
 	
-	public void speichereAlsCSV(String pfad) {
+	@FXML
+	public void ExportClicked() {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Auswahl der Exportmöglichkeit");
+		alert.setHeaderText("Auswahl Exportmöglichkeit");
+		alert.setContentText("Bitte wählen Sie die Exportmöglichkeit aus:");
 
+		ButtonType buttonTypeOne = new ButtonType("Projekte");
+		ButtonType buttonTypeTwo = new ButtonType("Mitarbeiter");
+		ButtonType buttonTypeThree = new ButtonType("Allgemein");
+		ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+
+		alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, buttonTypeThree, buttonTypeCancel);
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == buttonTypeOne){
+		    auswertungProjekte("D:\\export.csv");
+		} else if (result.get() == buttonTypeTwo) {
+		    auswertungMitarbeiter("D:\\export.csv");
+		} else if (result.get() == buttonTypeThree){
+		    auswertungAllgemein("D:\\export.csv");
+		}
+	}
+	
+	public void auswertungAllgemein(String pfad){
         FileWriter fileWriter = null;
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd;HH:mm");
+		LocalDateTime now = LocalDateTime.now();
         try {
             new File(pfad).createNewFile();
             fileWriter = new FileWriter(pfad);
+            String date = dtf.format(now);
+            fileWriter.append(date+";");
+            fileWriter.append("\n");
             fileWriter.append("Alle Taetigkeiten der Mitarbeiter");
             fileWriter.append("\n");
         	fileWriter.append("ID;Vorname;Nachname;");
@@ -244,9 +275,87 @@ public class AuswertungController implements Initializable{
         }
 	}
 	
-	@FXML
-	public void ExportClicked() {
-		speichereAlsCSV("D:\\export.csv");
+	public void auswertungMitarbeiter(String pfad){
+		FileWriter fileWriter = null;
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd;HH:mm");
+		LocalDateTime now = LocalDateTime.now();
+        try {
+            new File(pfad).createNewFile();
+            fileWriter = new FileWriter(pfad);
+            String date = dtf.format(now);
+            fileWriter.append(date+";");
+            fileWriter.append("\n");
+            fileWriter.append("Alle Taetigkeiten der Mitarbeiter");
+            fileWriter.append("\n");
+        	fileWriter.append("ID;Vorname;Nachname;");
+        	fileWriter.append("\n");
+            for (Mitarbeiter m : mitarbeiterliste) {
+                fileWriter.append(m.toCSV());
+                fileWriter.append("\n");
+            	fileWriter.append(";ID;Projekt;Dauer;Beschreibung;Datum;");
+            	fileWriter.append("\n");
+                for(Taetigkeit t : taetigkeitliste) {
+                	if(m.getId() == Integer.parseInt(t.getMitarId())) {
+                    	fileWriter.append(t.toCSVMitar());
+                    	fileWriter.append("\n");
+                    }
+                }
+            }
+            System.out.println("Erfolgreich exportiert!");
+
+        } catch (IOException e) {
+            System.out.println("Fehler beim Schreiben.");
+            e.printStackTrace();
+        } finally{
+            try{
+                fileWriter.flush();
+                fileWriter.close();
+            }catch(IOException e){
+                e.printStackTrace();
+            }
+        }
+	}
+	
+	public void auswertungProjekte(String pfad){
+		FileWriter fileWriter = null;
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd;HH:mm");
+		LocalDateTime now = LocalDateTime.now();
+
+        try {
+            new File(pfad).createNewFile();
+            fileWriter = new FileWriter(pfad);
+            String date = dtf.format(now);
+            fileWriter.append(date+";");
+            fileWriter.append("\n");
+            fileWriter.append("Alle Bearbeitungen der Projekte");
+            fileWriter.append("\n");
+        	fileWriter.append("ID;Bezeichnung;Auftraggeber;");
+        	fileWriter.append("\n");
+        	for(Projekt p : projektliste) {
+            	fileWriter.append(p.toCSV());
+            	fileWriter.append("\n");
+            	fileWriter.append(";ID;Mitarbeiter;Dauer;Beschreibung;Datum;");
+            	fileWriter.append("\n");
+                for(Taetigkeit t : taetigkeitliste) {
+                	if(p.getId() == Integer.parseInt(t.getProjId())) {
+                    	fileWriter.append(t.toCSVProj());
+                    	fileWriter.append("\n");
+                    }
+                }
+            }
+            System.out.println("Erfolgreich exportiert!");
+
+        } catch (IOException e) {
+            System.out.println("Fehler beim Schreiben.");
+            e.printStackTrace();
+        } finally{
+            try{
+                fileWriter.flush();
+                fileWriter.close();
+            }catch(IOException e){
+                e.printStackTrace();
+            }
+        }
 	}
 	
 	@FXML

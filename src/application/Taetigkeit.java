@@ -47,6 +47,13 @@ public class Taetigkeit {
 	public String getProj() {
 		return proj;
 	}
+	
+	public String getProjId() {
+		String[] splitProj;
+		splitProj = proj.split(border);
+		String projID = splitProj[0];
+		return projID;
+	}
 
 	public void setProj(String proj) {
 		this.proj = proj;
@@ -77,6 +84,14 @@ public class Taetigkeit {
 	}
 
 	public String toCSV() {
+		return "" + ";" +id + ";" + proj + ";" + zeit + ";" + beschreibung + ";" + datum;
+	}
+	
+	public String toCSVProj() {
+		return "" + ";" +id + ";" + mitar + ";" + zeit + ";" + beschreibung + ";" + datum;
+	}
+	
+	public String toCSVMitar() {
 		return "" + ";" +id + ";" + proj + ";" + zeit + ";" + beschreibung + ";" + datum;
 	}
 }
