@@ -82,6 +82,10 @@ public class Taetigkeit {
 	public void setDatum(Date datum) {
 		this.datum = datum;
 	}
+	
+	public String toString() {
+		return id + " / " + mitar + " / " + proj;
+	}
 
 	public String toCSV() {
 		return "" + ";" +id + ";" + proj + ";" + zeit + ";" + beschreibung + ";" + datum;

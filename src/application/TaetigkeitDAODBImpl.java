@@ -58,6 +58,145 @@ public class TaetigkeitDAODBImpl implements TaetigkeitDAO {
 		return taetigkeitliste;
 	}
 	
+	public List<Taetigkeit> getAllMitarTaetigkeit(String id){
+		Connection myConn = null;
+		ResultSet myRs = null;
+		Statement myStmt = null;
+		ArrayList<Taetigkeit> taetigkeitliste = new ArrayList<>();
+		try {		
+			myConn = SQLSingleton.getInstance().getConnection();
+			myStmt = myConn.createStatement();
+			myRs = myStmt.executeQuery("SELECT * from taetigkeit WHERE mitarid="+id);
+			
+			while (myRs.next()) {
+				Taetigkeit taet = new Taetigkeit(myRs.getInt("id"), myRs.getString("mitarid"), myRs.getString("projid"), myRs.getInt("arbeitszeit"), myRs.getString("beschreibung"), myRs.getDate("datum"));
+				taetigkeitliste.add(taet);
+			}
+		}
+		catch (Exception exc) {
+			exc.printStackTrace();
+		}
+		finally {
+			if (myRs != null) {
+				try {
+					myRs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			if (myStmt != null) {
+				try {
+					myStmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			if (myConn != null) {
+				try {
+					myConn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return taetigkeitliste;
+	}
+	
+	public List<Taetigkeit> getAllSpecificTaetigkeit(String projid, String mitarid){
+		Connection myConn = null;
+		ResultSet myRs = null;
+		Statement myStmt = null;
+		ArrayList<Taetigkeit> taetigkeitliste = new ArrayList<>();
+		try {		
+			myConn = SQLSingleton.getInstance().getConnection();
+			myStmt = myConn.createStatement();
+			myRs = myStmt.executeQuery("SELECT * from taetigkeit WHERE projid="+projid+" AND mitarid="+mitarid);
+			
+			while (myRs.next()) {
+				Taetigkeit taet = new Taetigkeit(myRs.getInt("id"), myRs.getString("mitarid"), myRs.getString("projid"), myRs.getInt("arbeitszeit"), myRs.getString("beschreibung"), myRs.getDate("datum"));
+				taetigkeitliste.add(taet);
+			}
+		}
+		catch (Exception exc) {
+			exc.printStackTrace();
+		}
+		finally {
+			if (myRs != null) {
+				try {
+					myRs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			if (myStmt != null) {
+				try {
+					myStmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			if (myConn != null) {
+				try {
+					myConn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return taetigkeitliste;
+	}
+	
+	public List<Taetigkeit> getAllProjTaetigkeit(String id){
+		Connection myConn = null;
+		Statement myStmt = null;
+		ResultSet myRs = null;
+		ArrayList<Taetigkeit> taetigkeitliste = new ArrayList<>();
+		try {
+			myConn = SQLSingleton.getInstance().getConnection();
+			myStmt = myConn.createStatement();
+			myRs = myStmt.executeQuery("SELECT * from taetigkeit WHERE projid="+id);
+			
+			while (myRs.next()) {
+				Taetigkeit taet = new Taetigkeit(myRs.getInt("id"), myRs.getString("mitarid"), myRs.getString("projid"), myRs.getInt("arbeitszeit"), myRs.getString("beschreibung"), myRs.getDate("datum"));
+				taetigkeitliste.add(taet);
+			}
+		}
+		catch (Exception exc) {
+			exc.printStackTrace();
+		}
+		finally {
+			if (myRs != null) {
+				try {
+					myRs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			if (myStmt != null) {
+				try {
+					myStmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			if (myConn != null) {
+				try {
+					myConn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return taetigkeitliste;
+	}
+	
+	
 	public void deleteTaetigkeit(int id) {
 		Connection myConn = null;
 		ResultSet myRs = null;
@@ -100,6 +239,8 @@ public class TaetigkeitDAODBImpl implements TaetigkeitDAO {
 			}
 		}
 	}
+	
+	
 	
 	public void addTaetigkeit(String mitarbeiter, String projekt, int zeit, String beschreibung, Date datum) {
 		PreparedStatement myStmt = null;

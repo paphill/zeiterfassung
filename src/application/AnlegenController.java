@@ -11,7 +11,7 @@ import java.util.*;
 import java.io.*;
 import java.net.URL;
 
-public class ErstellenController implements Initializable{
+public class AnlegenController implements Initializable{
 
 	ProjektDAO project = new ProjektDAODBImpl();
 	MitarbeiterDAO mitarbeiter = new MitarbeiterDAODBImpl();
